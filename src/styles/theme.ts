@@ -1,5 +1,6 @@
 export const light = {
   white: "#FFF",
+  black: "#000",
 
   gray50: "#F7F8FA",
   gray100: "#E6E8EB",
