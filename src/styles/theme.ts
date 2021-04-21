@@ -13,4 +13,9 @@ export const light = {
   purple400: "#9164FA",
   purple500: "#8257E5",
   purple800: "#6F48C9",
+
+  fonts: {
+    inter: "Inter",
+    lexend: "Lexend",
+  },
 }

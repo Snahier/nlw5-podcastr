@@ -29,8 +29,19 @@ export const GlobalStyles = createGlobalStyle`
     input,
     textarea,
     button {
-      font: 500 1rem sans-serif;
+      font: 500 1rem ${theme.fonts.inter}, sans-serif;
       color: ${theme.gray500};
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-weight: 600;
+      font-family: ${theme.fonts.lexend}, sans-serif;
+      color: ${theme.gray800};
     }
 
     h1 {
