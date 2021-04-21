@@ -13,7 +13,33 @@ export const Player = () => {
         <strong>Selecione um podcast para ouvir</strong>
       </EmptyPlayer>
 
-      <Footer></Footer>
+      <Footer className="empty">
+        <Progress>
+          <span>00:00</span>
+          <Slider>
+            <EmptySlider />
+          </Slider>
+          <span>00:00</span>
+        </Progress>
+
+        <Buttons>
+          <button>
+            <img src="/shuffle.svg" alt="Embaralhar" />
+          </button>
+          <button>
+            <img src="/play-previous.svg" alt="Tocar anterior" />
+          </button>
+          <button className="playButton">
+            <img src="/play.svg" alt="Tocar" />
+          </button>
+          <button>
+            <img src="/play-next.svg" alt="Tocar anterior" />
+          </button>
+          <button>
+            <img src="/repeat.svg" alt="Repetir" />
+          </button>
+        </Buttons>
+      </Footer>
     </PlayerContainer>
   )
 }
@@ -68,4 +94,64 @@ const EmptyPlayer = styled.div`
   `}
 `
 
-const Footer = styled.footer``
+const Footer = styled.footer`
+  align-self: stretch;
+
+  &.empty {
+    opacity: 0.5;
+  }
+`
+
+const Progress = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  font-size: 0.875rem;
+
+  span {
+    display: inline-block;
+    width: 4rem;
+    text-align: center;
+  }
+`
+
+const Slider = styled.div`
+  flex: 1;
+`
+
+const EmptySlider = styled.div`
+  ${({ theme }) => css`
+    width: 100%;
+    height: 4px;
+
+    border-radius: 2px;
+    background: ${theme.purple300};
+  `}
+`
+
+const Buttons = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+
+  margin-top: 2.5rem;
+
+  button {
+    border: 0;
+    background: transparent;
+
+    font-size: 0;
+  }
+
+  .playButton {
+    ${({ theme }) => css`
+      width: 4rem;
+      height: 4rem;
+
+      border-radius: 1rem;
+      background: ${theme.purple400};
+    `}
+  }
+`
