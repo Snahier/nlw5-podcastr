@@ -95,7 +95,46 @@ export default function Home({ all_episodes, latest_episodes }: HomeProps) {
         </ul>
       </LatestEpisodes>
 
-      <AllEpisodes></AllEpisodes>
+      <AllEpisodes>
+        <h2>Todos episódios</h2>
+
+        <table cellSpacing={0}>
+          <thead>
+            <th></th>
+            <th>Podcast</th>
+            <th>Integrantes</th>
+            <th>Data</th>
+            <th>Duração</th>
+            <th></th>
+          </thead>
+          <tbody>
+            {all_episodes.map((episode) => (
+              <tr key={episode.id}>
+                <td style={{ width: 72 }}>
+                  <Image
+                    width={120}
+                    height={120}
+                    src={episode.thumbnail}
+                    alt={episode.title}
+                    objectFit="cover"
+                  />
+                </td>
+                <td>
+                  <a href="">{episode.title}</a>
+                </td>
+                <td>{episode.members}</td>
+                <td style={{ width: 100 }}>{episode.published_at}</td>
+                <td>{episode.durationAsString}</td>
+                <td>
+                  <ButtonSmall>
+                    <img src="/play-green.svg" alt="Tocar episódio" />
+                  </ButtonSmall>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </AllEpisodes>
     </HomeContainer>
   )
 }
@@ -144,7 +183,54 @@ const LatestEpisodes = styled.section`
   `}
 `
 
-const AllEpisodes = styled.section``
+const AllEpisodes = styled.section`
+  ${({ theme }) => css`
+    padding-bottom: 2rem;
+
+    table {
+      width: 100%;
+
+      th,
+      td {
+        padding: 0.75rem 1rem;
+
+        border-bottom: 1px solid ${theme.gray100};
+      }
+
+      th {
+        color: ${theme.gray200};
+
+        text-transform: uppercase;
+        font: 500 0.75rem ${theme.fonts.lexend}, sans-serif;
+        text-align: left;
+      }
+
+      td {
+        font-size: 0.875rem;
+
+        img {
+          width: 2.5rem;
+          height: 2.5rem;
+
+          border-radius: 0.5rem;
+        }
+
+        a {
+          color: ${theme.gray800};
+          font-size: 1rem;
+          font-family: ${theme.fonts.lexend}, sans-serif;
+          font-weight: 600;
+          text-decoration: none;
+          line-height: 1.4rem;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  `}
+`
 
 const EpisodeDetails = styled.div`
   ${({ theme }) => css`
@@ -232,6 +318,30 @@ const Button = styled.button`
     img {
       width: 1.5rem !important;
       height: 1.5rem !important;
+    }
+  `}
+`
+
+const ButtonSmall = styled.button`
+  ${({ theme }) => css`
+    transition: filter 0.2s;
+
+    width: 2rem;
+    height: 2rem;
+
+    background: ${theme.white};
+    border: 1px solid ${theme.gray100};
+    border-radius: 0.5rem;
+
+    font-size: 0;
+
+    &:hover {
+      filter: brightness(0.9);
+    }
+
+    img {
+      width: 1.25rem !important;
+      height: 1.25rem !important;
     }
   `}
 `
