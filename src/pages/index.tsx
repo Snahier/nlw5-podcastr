@@ -2,6 +2,7 @@ import { format, parseISO } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import { GetStaticProps } from "next"
 import Image from "next/image"
+import Link from "next/link"
 import styled, { css } from "styled-components"
 import { api } from "../services/api"
 import { convertDurationToTimeString } from "../utils/convertDurationToTimeString"
@@ -100,12 +101,14 @@ export default function Home({ all_episodes, latest_episodes }: HomeProps) {
 
         <table cellSpacing={0}>
           <thead>
-            <th></th>
-            <th>Podcast</th>
-            <th>Integrantes</th>
-            <th>Data</th>
-            <th>Duração</th>
-            <th></th>
+            <tr>
+              <th></th>
+              <th>Podcast</th>
+              <th>Integrantes</th>
+              <th>Data</th>
+              <th>Duração</th>
+              <th></th>
+            </tr>
           </thead>
           <tbody>
             {all_episodes.map((episode) => (
@@ -120,7 +123,9 @@ export default function Home({ all_episodes, latest_episodes }: HomeProps) {
                   />
                 </td>
                 <td>
-                  <a href="">{episode.title}</a>
+                  <Link href={`/episodes/${episode.id}`}>
+                    <a>{episode.title}</a>
+                  </Link>
                 </td>
                 <td>{episode.members}</td>
                 <td style={{ width: 100 }}>{episode.published_at}</td>
