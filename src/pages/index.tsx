@@ -1,6 +1,7 @@
 import { format, parseISO } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import { GetStaticProps } from "next"
+import styled from "styled-components"
 import { api } from "../services/api"
 import { convertDurationToTimeString } from "../utils/convertDurationToTimeString"
 
@@ -17,18 +18,8 @@ type Episode = {
 }
 
 type HomeProps = {
-  episodes: Episode[]
-}
-
-export default function Home(props: HomeProps) {
-  return (
-    <div>
-      <h1>Index</h1>
-      <pre>
-        <p>{JSON.stringify(props.episodes, null, 2)}</p>
-      </pre>
-    </div>
-  )
+  latest_episodes: Episode[]
+  all_episodes: Episode[]
 }
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -59,10 +50,53 @@ export const getStaticProps: GetStaticProps = async () => {
     }
   })
 
+  const latest_episodes = episodes.slice(0, 2)
+  const all_episodes = episodes.slice(2, episodes.length)
+
   return {
     props: {
-      episodes,
+      latest_episodes,
+      all_episodes,
     },
     revalidate: 60 * 60 * 8,
   }
 }
+
+export default function Home({ all_episodes, latest_episodes }: HomeProps) {
+  return (
+    <HomeContainer>
+      <LatestEpisodes>
+        <h2>Últimos lançamentos</h2>
+
+        <ul>
+          {latest_episodes.map((episode) => (
+            <li key={episode.id}>
+              <img src={episode.thumbnail} alt={episode.title} />
+
+              <EpisodeDetails>
+                <a href="">{episode.title}</a>
+                <p>{episode.members}</p>
+                <span>{episode.published_at}</span>
+                <span>{episode.durationAsString}</span>
+              </EpisodeDetails>
+
+              <button>
+                <img src="/play-green.svg" alt="Tocar episódio" />
+              </button>
+            </li>
+          ))}
+        </ul>
+      </LatestEpisodes>
+
+      <AllEpisodes></AllEpisodes>
+    </HomeContainer>
+  )
+}
+
+const HomeContainer = styled.div``
+
+const LatestEpisodes = styled.section``
+
+const AllEpisodes = styled.section``
+
+const EpisodeDetails = styled.div``
