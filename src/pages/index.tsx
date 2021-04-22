@@ -1,6 +1,7 @@
 import { format, parseISO } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import { GetStaticProps } from "next"
+import Image from "next/image"
 import styled from "styled-components"
 import { api } from "../services/api"
 import { convertDurationToTimeString } from "../utils/convertDurationToTimeString"
@@ -71,7 +72,12 @@ export default function Home({ all_episodes, latest_episodes }: HomeProps) {
         <ul>
           {latest_episodes.map((episode) => (
             <li key={episode.id}>
-              <img src={episode.thumbnail} alt={episode.title} />
+              <Image
+                width={192}
+                height={192}
+                src={episode.thumbnail}
+                alt={episode.title}
+              />
 
               <EpisodeDetails>
                 <a href="">{episode.title}</a>
