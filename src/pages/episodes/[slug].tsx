@@ -3,6 +3,7 @@ import { ptBR } from "date-fns/locale"
 import { GetStaticPaths, GetStaticProps } from "next"
 import { Params } from "next/dist/next-server/server/router"
 import Image from "next/image"
+import Link from "next/link"
 import { useRouter } from "next/router"
 import styled, { css } from "styled-components"
 import { api } from "../../services/api"
@@ -64,9 +65,11 @@ export default function Episode({ episode }: EpisodeProps) {
   return (
     <EpisodeContainer>
       <ThumbnailContainer>
-        <GoBackButton>
-          <img src="/arrow-left.svg" alt="Voltar" />
-        </GoBackButton>
+        <Link href="/">
+          <GoBackButton>
+            <img src="/arrow-left.svg" alt="Voltar" />
+          </GoBackButton>
+        </Link>
 
         <Image
           width={700}
