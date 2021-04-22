@@ -2,7 +2,7 @@ import { format, parseISO } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import { GetStaticProps } from "next"
 import Image from "next/image"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { api } from "../services/api"
 import { convertDurationToTimeString } from "../utils/convertDurationToTimeString"
 
@@ -77,6 +77,7 @@ export default function Home({ all_episodes, latest_episodes }: HomeProps) {
                 height={192}
                 src={episode.thumbnail}
                 alt={episode.title}
+                objectFit="cover"
               />
 
               <EpisodeDetails>
@@ -86,9 +87,9 @@ export default function Home({ all_episodes, latest_episodes }: HomeProps) {
                 <span>{episode.durationAsString}</span>
               </EpisodeDetails>
 
-              <button>
+              <Button>
                 <img src="/play-green.svg" alt="Tocar episódio" />
-              </button>
+              </Button>
             </li>
           ))}
         </ul>
@@ -99,10 +100,138 @@ export default function Home({ all_episodes, latest_episodes }: HomeProps) {
   )
 }
 
-const HomeContainer = styled.div``
+const HomeContainer = styled.div`
+  overflow-y: scroll;
 
-const LatestEpisodes = styled.section``
+  height: calc(100vh - 6.5rem);
+  padding: 0 4rem;
+
+  h2 {
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+  }
+`
+
+const LatestEpisodes = styled.section`
+  ${({ theme }) => css`
+    ul {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+
+      list-style: none;
+
+      li {
+        position: relative;
+
+        display: flex;
+        align-items: center;
+
+        padding: 1.25rem;
+
+        border: 1px solid ${theme.gray100};
+        border-radius: 1.5rem;
+        background: ${theme.white};
+      }
+
+      img {
+        width: 6rem;
+        height: 6rem;
+
+        border-radius: 1rem;
+      }
+    }
+  `}
+`
 
 const AllEpisodes = styled.section``
 
-const EpisodeDetails = styled.div``
+const EpisodeDetails = styled.div`
+  ${({ theme }) => css`
+    flex: 1;
+
+    margin-left: 1rem;
+
+    a {
+      display: block;
+
+      color: ${theme.gray800};
+      font-family: ${theme.fonts.lexend}, sans-serif;
+      font-weight: 600;
+      text-decoration: none;
+      line-height: 1.4rem;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    p {
+      overflow: hidden;
+
+      max-width: 70%;
+      margin-top: 0.5rem;
+
+      font-size: 0.875rem;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    span {
+      display: inline-block;
+
+      margin-top: 0.5rem;
+
+      font-size: 0.875rem;
+
+      &:last-child {
+        position: relative;
+
+        margin-left: 0.5rem;
+        padding-left: 0.5rem;
+
+        &::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 50%;
+          transform: translate(-50%, -50%);
+
+          width: 4px;
+          height: 4px;
+
+          border-radius: 2px;
+          background: #ddd;
+        }
+      }
+    }
+  `}
+`
+
+const Button = styled.button`
+  ${({ theme }) => css`
+    position: absolute;
+    right: 2rem;
+    bottom: 2rem;
+
+    transition: filter 0.2s;
+
+    width: 2.5rem;
+    height: 2.5rem;
+
+    background: ${theme.white};
+    border: 1px solid ${theme.gray100};
+    border-radius: 0.675rem;
+
+    font-size: 0;
+
+    &:hover {
+      filter: brightness(0.9);
+    }
+
+    img {
+      width: 1.5rem !important;
+      height: 1.5rem !important;
+    }
+  `}
+`
