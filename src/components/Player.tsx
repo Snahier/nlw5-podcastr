@@ -34,7 +34,7 @@ export const Player = () => {
         </EmptyPlayer>
       )}
 
-      <Footer className="empty">
+      <Footer className={!episode ? "empty" : null}>
         <Progress>
           <span>00:00</span>
           <Slider>
