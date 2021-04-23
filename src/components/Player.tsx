@@ -7,7 +7,9 @@ import styled, { css, ThemeContext } from "styled-components"
 import { PlayerContext } from "../contexts/PlayerContext"
 
 export const Player = () => {
-  const { episodeList, currentEpisodeIndex } = useContext(PlayerContext)
+  const { episodeList, currentEpisodeIndex, isPlaying } = useContext(
+    PlayerContext
+  )
   const theme = useContext(ThemeContext)
 
   const episode = episodeList[currentEpisodeIndex]
@@ -54,6 +56,8 @@ export const Player = () => {
           <span>00:00</span>
         </Progress>
 
+        {episode && <audio src={episode.url} autoPlay />}
+
         <Buttons>
           <button disabled={!episode}>
             <img src="/shuffle.svg" alt="Embaralhar" />
@@ -62,7 +66,11 @@ export const Player = () => {
             <img src="/play-previous.svg" alt="Tocar anterior" />
           </button>
           <button className="playButton" disabled={!episode}>
-            <img src="/play.svg" alt="Tocar" />
+            {isPlaying ? (
+              <img src="/pause.svg" alt="Pausar" />
+            ) : (
+              <img src="/play.svg" alt="Tocar" />
+            )}
           </button>
           <button disabled={!episode}>
             <img src="/play-next.svg" alt="Tocar anterior" />
@@ -223,7 +231,9 @@ const Buttons = styled.div`
         border-radius: 1rem;
         background: ${theme.purple400};
 
-        filter: brightness(0.95);
+        &:hover:not(:disabled) {
+          filter: brightness(0.95);
+        }
       `}
     }
   }
