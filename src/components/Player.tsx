@@ -55,19 +55,19 @@ export const Player = () => {
         </Progress>
 
         <Buttons>
-          <button>
+          <button disabled={!episode}>
             <img src="/shuffle.svg" alt="Embaralhar" />
           </button>
-          <button>
+          <button disabled={!episode}>
             <img src="/play-previous.svg" alt="Tocar anterior" />
           </button>
-          <button className="playButton">
+          <button className="playButton" disabled={!episode}>
             <img src="/play.svg" alt="Tocar" />
           </button>
-          <button>
+          <button disabled={!episode}>
             <img src="/play-next.svg" alt="Tocar anterior" />
           </button>
-          <button>
+          <button disabled={!episode}>
             <img src="/repeat.svg" alt="Repetir" />
           </button>
         </Buttons>
@@ -204,15 +204,27 @@ const Buttons = styled.div`
     background: transparent;
 
     font-size: 0;
-  }
 
-  .playButton {
-    ${({ theme }) => css`
-      width: 4rem;
-      height: 4rem;
+    transition: filter 0.2s;
 
-      border-radius: 1rem;
-      background: ${theme.purple400};
-    `}
+    &:disabled {
+      cursor: default;
+    }
+
+    &:hover:not(:disabled) {
+      filter: brightness(0.7);
+    }
+
+    &.playButton {
+      ${({ theme }) => css`
+        width: 4rem;
+        height: 4rem;
+
+        border-radius: 1rem;
+        background: ${theme.purple400};
+
+        filter: brightness(0.95);
+      `}
+    }
   }
 `
