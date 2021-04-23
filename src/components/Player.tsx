@@ -1,3 +1,4 @@
+import Image from "next/image"
 import { rgba } from "polished"
 import { useContext } from "react"
 import styled, { css } from "styled-components"
@@ -12,12 +13,26 @@ export const Player = () => {
     <PlayerContainer>
       <Header>
         <img src="/playing.svg" alt="Tocando agora" />
-        <strong>Tocando agora {episode?.title}</strong>
+        <strong>Tocando agora</strong>
       </Header>
 
-      <EmptyPlayer>
-        <strong>Selecione um podcast para ouvir</strong>
-      </EmptyPlayer>
+      {episode ? (
+        <CurrentEpisode>
+          <Image
+            width={592}
+            height={592}
+            src={episode.thumbnail}
+            alt=""
+            objectFit="cover"
+          />
+          <strong>{episode.title}</strong>
+          <span>{episode.members}</span>
+        </CurrentEpisode>
+      ) : (
+        <EmptyPlayer>
+          <strong>Selecione um podcast para ouvir</strong>
+        </EmptyPlayer>
+      )}
 
       <Footer className="empty">
         <Progress>
@@ -76,6 +91,35 @@ const Header = styled.header`
   display: flex;
   align-items: center;
   gap: 16px;
+`
+
+const CurrentEpisode = styled.div`
+  ${({ theme }) => css`
+    text-align: center;
+
+    img {
+      border-radius: 1.5rem;
+    }
+
+    strong {
+      display: block;
+
+      margin-top: 2rem;
+
+      font: 600 1.25rem ${theme.fonts.lexend}, sans-serif;
+      line-height: 1.75rem;
+    }
+
+    span {
+      display: block;
+
+      opacity: 0.6;
+
+      margin-top: 1rem;
+
+      line-height: 1.5rem;
+    }
+  `}
 `
 
 const EmptyPlayer = styled.div`
