@@ -33,7 +33,6 @@ export const getStaticProps: GetStaticProps = async () => {
       _order: "desc",
     },
   })
-  console.log(data)
 
   const episodes = data.map((episode: any) => {
     return {
