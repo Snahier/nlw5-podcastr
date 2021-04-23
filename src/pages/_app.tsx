@@ -1,20 +1,33 @@
 import { AppProps } from "next/dist/next-server/lib/router/router"
+import { useState } from "react"
 import styled, { ThemeProvider } from "styled-components"
 import { Header } from "../components/Header"
 import { Player } from "../components/Player"
+import { PlayerContext } from "../contexts/PlayerContext"
 import { GlobalStyles } from "../styles/GlobalStyles"
 import { light } from "../styles/theme"
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [episodeList, setEpisodeList] = useState([])
+  const [currentEpisodeIndex, setCurrentEpisodeIndex] = useState(0)
+
+  const play = (episode) => {
+    setEpisodeList([episode])
+    setCurrentEpisodeIndex(0)
+  }
+
   return (
     <AppContainer>
       <ThemeProvider theme={light}>
         <GlobalStyles />
-        <main>
-          <Header />
-          <Component {...pageProps} />
-        </main>
-        <Player />
+        <PlayerContext.Provider
+          value={{ episodeList, currentEpisodeIndex, play }}>
+          <main>
+            <Header />
+            <Component {...pageProps} />
+          </main>
+          <Player />
+        </PlayerContext.Provider>
       </ThemeProvider>
     </AppContainer>
   )

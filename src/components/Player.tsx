@@ -1,12 +1,18 @@
 import { rgba } from "polished"
+import { useContext } from "react"
 import styled, { css } from "styled-components"
+import { PlayerContext } from "../contexts/PlayerContext"
 
 export const Player = () => {
+  const { episodeList, currentEpisodeIndex } = useContext(PlayerContext)
+
+  const episode = episodeList[currentEpisodeIndex]
+
   return (
     <PlayerContainer>
       <Header>
         <img src="/playing.svg" alt="Tocando agora" />
-        <strong>Tocando agora</strong>
+        <strong>Tocando agora {episode?.title}</strong>
       </Header>
 
       <EmptyPlayer>
