@@ -22,6 +22,10 @@ function MyApp({ Component, pageProps }: AppProps) {
     setIsPlaying(!isPlaying)
   }
 
+  const setPlayingState = (state: boolean) => {
+    setIsPlaying(state)
+  }
+
   return (
     <AppContainer>
       <ThemeProvider theme={light}>
@@ -33,6 +37,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             isPlaying,
             play,
             togglePlay,
+            setPlayingState,
           }}>
           <main>
             <Header />

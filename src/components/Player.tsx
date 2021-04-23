@@ -12,6 +12,7 @@ export const Player = () => {
     currentEpisodeIndex,
     isPlaying,
     togglePlay,
+    setPlayingState,
   } = useContext(PlayerContext)
   const theme = useContext(ThemeContext)
 
@@ -72,7 +73,15 @@ export const Player = () => {
           <span>00:00</span>
         </Progress>
 
-        {episode && <audio ref={audioRef} src={episode.url} autoPlay />}
+        {episode && (
+          <audio
+            ref={audioRef}
+            src={episode.url}
+            autoPlay
+            onPlay={() => setPlayingState(true)}
+            onPause={() => setPlayingState(false)}
+          />
+        )}
 
         <Buttons>
           <button disabled={!episode}>
