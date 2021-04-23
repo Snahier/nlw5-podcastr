@@ -1,11 +1,14 @@
 import Image from "next/image"
 import { rgba } from "polished"
+import Slider from "rc-slider"
+import "rc-slider/assets/index.css"
 import { useContext } from "react"
-import styled, { css } from "styled-components"
+import styled, { css, ThemeContext } from "styled-components"
 import { PlayerContext } from "../contexts/PlayerContext"
 
 export const Player = () => {
   const { episodeList, currentEpisodeIndex } = useContext(PlayerContext)
+  const theme = useContext(ThemeContext)
 
   const episode = episodeList[currentEpisodeIndex]
 
@@ -37,9 +40,17 @@ export const Player = () => {
       <Footer className={!episode ? "empty" : null}>
         <Progress>
           <span>00:00</span>
-          <Slider>
-            <EmptySlider />
-          </Slider>
+          <SliderWrapper>
+            {episode ? (
+              <Slider
+                trackStyle={{ backgroundColor: theme.green500 }}
+                railStyle={{ backgroundClip: theme.purple300 }}
+                handleStyle={{ borderColor: theme.green500, borderWidth: 4 }}
+              />
+            ) : (
+              <EmptySlider />
+            )}
+          </SliderWrapper>
           <span>00:00</span>
         </Progress>
 
@@ -166,7 +177,7 @@ const Progress = styled.div`
   }
 `
 
-const Slider = styled.div`
+const SliderWrapper = styled.div`
   flex: 1;
 `
 
