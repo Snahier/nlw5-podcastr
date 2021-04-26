@@ -11,9 +11,11 @@ export const Player = () => {
     episodeList,
     currentEpisodeIndex,
     isPlaying,
+    isLooping,
     hasNext,
     hasPrevious,
     togglePlay,
+    toggleLoop,
     playNext,
     playPrevious,
     setPlayingState,
@@ -81,6 +83,7 @@ export const Player = () => {
           <audio
             ref={audioRef}
             src={episode.url}
+            loop={isLooping}
             autoPlay
             onPlay={() => setPlayingState(true)}
             onPause={() => setPlayingState(false)}
@@ -88,34 +91,34 @@ export const Player = () => {
         )}
 
         <Buttons>
-          <button disabled={!episode}>
+          <ShuffleButton disabled={!episode}>
             <img src="/shuffle.svg" alt="Embaralhar" />
-          </button>
+          </ShuffleButton>
 
-          <button
+          <PlayPreviousButton
             disabled={!episode || !hasPrevious}
-            onClick={() => playPrevious()}>
+            onClick={playPrevious}>
             <img src="/play-previous.svg" alt="Tocar anterior" />
-          </button>
+          </PlayPreviousButton>
 
-          <button
-            className="playButton"
-            disabled={!episode}
-            onClick={() => togglePlay()}>
+          <PlayButton disabled={!episode} onClick={togglePlay}>
             {isPlaying ? (
               <img src="/pause.svg" alt="Pausar" />
             ) : (
               <img src="/play.svg" alt="Tocar" />
             )}
-          </button>
+          </PlayButton>
 
-          <button disabled={!episode || !hasNext} onClick={() => playNext()}>
+          <PlayNextButton disabled={!episode || !hasNext} onClick={playNext}>
             <img src="/play-next.svg" alt="Tocar anterior" />
-          </button>
+          </PlayNextButton>
 
-          <button disabled={!episode}>
+          <LoopButton
+            isLooping={isLooping}
+            disabled={!episode}
+            onClick={toggleLoop}>
             <img src="/repeat.svg" alt="Repetir" />
-          </button>
+          </LoopButton>
         </Buttons>
       </Footer>
     </PlayerContainer>
@@ -244,36 +247,64 @@ const Buttons = styled.div`
   gap: 1.5rem;
 
   margin-top: 2.5rem;
+`
 
-  button {
-    border: 0;
-    background: transparent;
+const buttonStyles = css`
+  border: 0;
+  background: transparent;
 
-    font-size: 0;
+  font-size: 0;
 
-    transition: filter 0.2s;
+  transition: filter 0.2s;
 
-    &:disabled {
-      cursor: default;
-      opacity: 0.5;
-    }
+  &:disabled {
+    cursor: default;
+    opacity: 0.5;
+  }
+
+  &:hover:not(:disabled) {
+    filter: brightness(0.7);
+  }
+`
+
+const ShuffleButton = styled.button`
+  ${buttonStyles}
+`
+const PlayPreviousButton = styled.button`
+  ${buttonStyles}
+`
+const PlayButton = styled.button`
+  ${buttonStyles}
+  ${({ theme }) => css`
+    width: 4rem;
+    height: 4rem;
+
+    border-radius: 1rem;
+    background: ${theme.purple400};
 
     &:hover:not(:disabled) {
-      filter: brightness(0.7);
+      filter: brightness(0.95);
     }
+  `}
+`
+const PlayNextButton = styled.button`
+  ${buttonStyles}
+`
 
-    &.playButton {
-      ${({ theme }) => css`
-        width: 4rem;
-        height: 4rem;
+type LoopButtonProps = {
+  isLooping?: boolean
+}
+const LoopButton = styled.button<LoopButtonProps>`
+  ${buttonStyles}
+  ${({ isLooping }) => css`
+    ${isLooping &&
+    css`
+      filter: invert(0.35) sepia(1) saturate(3) hue-rotate(100deg);
 
-        border-radius: 1rem;
-        background: ${theme.purple400};
-
-        &:hover:not(:disabled) {
-          filter: brightness(0.95);
-        }
-      `}
-    }
-  }
+      &:hover {
+        filter: brightness(0.6) invert(0.35) sepia(1) saturate(3)
+          hue-rotate(100deg);
+      }
+    `}
+  `}
 `
