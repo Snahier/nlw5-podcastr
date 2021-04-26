@@ -13,11 +13,13 @@ type PlayerContextData = {
   currentEpisodeIndex: number
   isPlaying: boolean
   isLooping: boolean
+  isShuffling: boolean
   hasNext: boolean
   hasPrevious: boolean
   play: (episode: Episode) => void
   togglePlay: () => void
   toggleLoop: () => void
+  toggleShuffle: () => void
   setPlayingState: (state: boolean) => void
   playList: (list: Episode[], index: number) => void
   playNext: () => void
@@ -37,6 +39,7 @@ export const PlayerContextProvider = ({
   const [currentEpisodeIndex, setCurrentEpisodeIndex] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
   const [isLooping, setIsLooping] = useState(false)
+  const [isShuffling, setIsShuffling] = useState(false)
 
   const play = (episode: Episode) => {
     setEpisodeList([episode])
@@ -50,34 +53,20 @@ export const PlayerContextProvider = ({
     setIsPlaying(true)
   }
 
-  const togglePlay = () => {
-    setIsPlaying(!isPlaying)
-  }
-
-  const toggleLoop = () => {
-    setIsLooping(!isLooping)
-  }
+  const togglePlay = () => setIsPlaying(!isPlaying)
+  const toggleLoop = () => setIsLooping(!isLooping)
+  const toggleShuffle = () => setIsShuffling(!isShuffling)
 
   const hasNext = currentEpisodeIndex + 1 < episodeList.length
   const hasPrevious = currentEpisodeIndex > 0
 
-  const playNext = () => {
-    const nextEpisodeIndex = currentEpisodeIndex + 1
+  const playNext = () =>
+    hasNext && setCurrentEpisodeIndex(currentEpisodeIndex + 1)
 
-    if (hasNext) {
-      setCurrentEpisodeIndex(currentEpisodeIndex + 1)
-    }
-  }
+  const playPrevious = () =>
+    hasPrevious && setCurrentEpisodeIndex(currentEpisodeIndex - 1)
 
-  const playPrevious = () => {
-    if (hasPrevious) {
-      setCurrentEpisodeIndex(currentEpisodeIndex - 1)
-    }
-  }
-
-  const setPlayingState = (state: boolean) => {
-    setIsPlaying(state)
-  }
+  const setPlayingState = (state: boolean) => setIsPlaying(state)
 
   return (
     <PlayerContext.Provider
@@ -86,6 +75,7 @@ export const PlayerContextProvider = ({
         currentEpisodeIndex,
         isPlaying,
         isLooping,
+        isShuffling,
         hasNext,
         hasPrevious,
         play,
@@ -94,6 +84,7 @@ export const PlayerContextProvider = ({
         playPrevious,
         togglePlay,
         toggleLoop,
+        toggleShuffle,
         setPlayingState,
       }}>
       {children}
