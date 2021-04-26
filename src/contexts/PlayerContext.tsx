@@ -60,8 +60,16 @@ export const PlayerContextProvider = ({
   const hasNext = currentEpisodeIndex + 1 < episodeList.length
   const hasPrevious = currentEpisodeIndex > 0
 
-  const playNext = () =>
-    hasNext && setCurrentEpisodeIndex(currentEpisodeIndex + 1)
+  const playNext = () => {
+    if (isShuffling) {
+      const nextRandomEpisodeIndex = Math.floor(
+        Math.random() * episodeList.length
+      )
+      setCurrentEpisodeIndex(nextRandomEpisodeIndex)
+    } else if (hasNext) {
+      setCurrentEpisodeIndex(currentEpisodeIndex + 1)
+    }
+  }
 
   const playPrevious = () =>
     hasPrevious && setCurrentEpisodeIndex(currentEpisodeIndex - 1)
