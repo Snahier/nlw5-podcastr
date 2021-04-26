@@ -12,10 +12,12 @@ export const Player = () => {
     currentEpisodeIndex,
     isPlaying,
     isLooping,
+    isShuffling,
     hasNext,
     hasPrevious,
     togglePlay,
     toggleLoop,
+    toggleShuffle,
     playNext,
     playPrevious,
     setPlayingState,
@@ -91,7 +93,10 @@ export const Player = () => {
         )}
 
         <Buttons>
-          <ShuffleButton disabled={!episode}>
+          <ShuffleButton
+            isShuffling={isShuffling}
+            disabled={!episode || episodeList.length === 1}
+            onClick={toggleShuffle}>
             <img src="/shuffle.svg" alt="Embaralhar" />
           </ShuffleButton>
 
@@ -267,8 +272,14 @@ const buttonStyles = css`
   }
 `
 
-const ShuffleButton = styled.button`
+type ShuffleButtonProps = {
+  isShuffling?: boolean
+}
+const ShuffleButton = styled.button<ShuffleButtonProps>`
   ${buttonStyles}
+  ${({ isShuffling }) => css`
+    ${isShuffling && css``}
+  `}
 `
 const PlayPreviousButton = styled.button`
   ${buttonStyles}
