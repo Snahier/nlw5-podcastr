@@ -11,7 +11,11 @@ export const Player = () => {
     episodeList,
     currentEpisodeIndex,
     isPlaying,
+    hasNext,
+    hasPrevious,
     togglePlay,
+    playNext,
+    playPrevious,
     setPlayingState,
   } = useContext(PlayerContext)
   const theme = useContext(ThemeContext)
@@ -87,9 +91,13 @@ export const Player = () => {
           <button disabled={!episode}>
             <img src="/shuffle.svg" alt="Embaralhar" />
           </button>
-          <button disabled={!episode}>
+
+          <button
+            disabled={!episode || !hasPrevious}
+            onClick={() => playPrevious()}>
             <img src="/play-previous.svg" alt="Tocar anterior" />
           </button>
+
           <button
             className="playButton"
             disabled={!episode}
@@ -100,9 +108,11 @@ export const Player = () => {
               <img src="/play.svg" alt="Tocar" />
             )}
           </button>
-          <button disabled={!episode}>
+
+          <button disabled={!episode || !hasNext} onClick={() => playNext()}>
             <img src="/play-next.svg" alt="Tocar anterior" />
           </button>
+
           <button disabled={!episode}>
             <img src="/repeat.svg" alt="Repetir" />
           </button>
@@ -245,6 +255,7 @@ const Buttons = styled.div`
 
     &:disabled {
       cursor: default;
+      opacity: 0.5;
     }
 
     &:hover:not(:disabled) {

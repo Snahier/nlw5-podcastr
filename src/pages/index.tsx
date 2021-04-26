@@ -64,7 +64,9 @@ export const getStaticProps: GetStaticProps = async () => {
 }
 
 export default function Home({ all_episodes, latest_episodes }: HomeProps) {
-  const { play } = useContext(PlayerContext)
+  const { playList } = useContext(PlayerContext)
+
+  const episodeList = [...latest_episodes, ...all_episodes]
 
   return (
     <HomeContainer>
@@ -72,7 +74,7 @@ export default function Home({ all_episodes, latest_episodes }: HomeProps) {
         <h2>Últimos lançamentos</h2>
 
         <ul>
-          {latest_episodes.map((episode) => (
+          {latest_episodes.map((episode, index) => (
             <li key={episode.id}>
               <Image
                 width={192}
@@ -89,7 +91,7 @@ export default function Home({ all_episodes, latest_episodes }: HomeProps) {
                 <span>{episode.durationAsString}</span>
               </EpisodeDetails>
 
-              <Button onClick={() => play(episode)}>
+              <Button onClick={() => playList(episodeList, index)}>
                 <img src="/play-green.svg" alt="Tocar episódio" />
               </Button>
             </li>
@@ -112,7 +114,7 @@ export default function Home({ all_episodes, latest_episodes }: HomeProps) {
             </tr>
           </thead>
           <tbody>
-            {all_episodes.map((episode) => (
+            {all_episodes.map((episode, index) => (
               <tr key={episode.id}>
                 <td style={{ width: 72 }}>
                   <Image
@@ -132,7 +134,10 @@ export default function Home({ all_episodes, latest_episodes }: HomeProps) {
                 <td style={{ width: 100 }}>{episode.published_at}</td>
                 <td>{episode.durationAsString}</td>
                 <td>
-                  <ButtonSmall>
+                  <ButtonSmall
+                    onClick={() =>
+                      playList(episodeList, index + latest_episodes.length)
+                    }>
                     <img src="/play-green.svg" alt="Tocar episódio" />
                   </ButtonSmall>
                 </td>
