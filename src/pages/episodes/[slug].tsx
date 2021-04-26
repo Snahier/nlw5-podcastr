@@ -60,7 +60,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export default function Episode({ episode }: EpisodeProps) {
-  const {} = usePlayer()
+  const { play } = usePlayer()
 
   return (
     <EpisodeContainer>
@@ -78,7 +78,7 @@ export default function Episode({ episode }: EpisodeProps) {
           objectFit="cover"
         />
 
-        <PlayButton>
+        <PlayButton onClick={() => play(episode)}>
           <img src="/play.svg" alt="Tocar" />
         </PlayButton>
       </ThumbnailContainer>
