@@ -1,6 +1,7 @@
 import { format, parseISO } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import { GetStaticProps } from "next"
+import Head from "next/head"
 import Image from "next/image"
 import Link from "next/link"
 import styled, { css } from "styled-components"
@@ -69,6 +70,10 @@ export default function Home({ all_episodes, latest_episodes }: HomeProps) {
 
   return (
     <HomeContainer>
+      <Head>
+        <title>Home | Podcastr</title>
+      </Head>
+
       <LatestEpisodes>
         <h2>Últimos lançamentos</h2>
 

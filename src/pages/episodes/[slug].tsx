@@ -2,6 +2,7 @@ import { format, parseISO } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import { GetStaticPaths, GetStaticProps } from "next"
 import { Params } from "next/dist/next-server/server/router"
+import Head from "next/head"
 import Image from "next/image"
 import Link from "next/link"
 import styled, { css } from "styled-components"
@@ -64,6 +65,10 @@ export default function Episode({ episode }: EpisodeProps) {
 
   return (
     <EpisodeContainer>
+      <Head>
+        <title>{episode.title}</title>
+      </Head>
+
       <ThumbnailContainer>
         <Link href="/">
           <GoBackButton>
