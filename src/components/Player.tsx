@@ -22,6 +22,7 @@ export const Player = () => {
     playNext,
     playPrevious,
     setPlayingState,
+    clearPlayerState,
   } = usePlayer()
 
   const theme = useContext(ThemeContext)
@@ -29,6 +30,14 @@ export const Player = () => {
   const handleAudioTimeChange = (amount: number) => {
     audioRef.current.currentTime = amount
     setProgress(amount)
+  }
+
+  const handleEpisodeEnded = () => {
+    if (hasNext) {
+      playNext()
+    } else {
+      clearPlayerState()
+    }
   }
 
   const episode = episodeList[currentEpisodeIndex]
@@ -110,6 +119,7 @@ export const Player = () => {
             onPlay={() => setPlayingState(true)}
             onPause={() => setPlayingState(false)}
             onLoadedMetadata={setupProgressListener}
+            onEnded={handleEpisodeEnded}
           />
         )}
 
