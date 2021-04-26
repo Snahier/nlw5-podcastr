@@ -84,7 +84,7 @@ export default function Home({ all_episodes, latest_episodes }: HomeProps) {
               />
 
               <EpisodeDetails>
-                <a href="">{episode.title}</a>
+                <a href={`/episodes/${episode.id}`}>{episode.title}</a>
                 <p>{episode.members}</p>
                 <span>{episode.published_at}</span>
                 <span>{episode.durationAsString}</span>
