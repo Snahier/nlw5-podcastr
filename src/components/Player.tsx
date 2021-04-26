@@ -293,13 +293,21 @@ const buttonStyles = css`
   }
 `
 
+const activeButtonStyles = css`
+  filter: invert(0.35) sepia(1) saturate(3) hue-rotate(100deg);
+
+  &:hover {
+    filter: brightness(0.6) invert(0.35) sepia(1) saturate(3) hue-rotate(100deg);
+  }
+`
+
 type ShuffleButtonProps = {
   isShuffling?: boolean
 }
 const ShuffleButton = styled.button<ShuffleButtonProps>`
   ${buttonStyles}
   ${({ isShuffling }) => css`
-    ${isShuffling && css``}
+    ${isShuffling && activeButtonStyles}
   `}
 `
 const PlayPreviousButton = styled.button`
@@ -329,14 +337,6 @@ type LoopButtonProps = {
 const LoopButton = styled.button<LoopButtonProps>`
   ${buttonStyles}
   ${({ isLooping }) => css`
-    ${isLooping &&
-    css`
-      filter: invert(0.35) sepia(1) saturate(3) hue-rotate(100deg);
-
-      &:hover {
-        filter: brightness(0.6) invert(0.35) sepia(1) saturate(3)
-          hue-rotate(100deg);
-      }
-    `}
+    ${isLooping && activeButtonStyles}
   `}
 `
