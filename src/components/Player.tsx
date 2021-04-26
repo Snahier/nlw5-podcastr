@@ -26,6 +26,11 @@ export const Player = () => {
 
   const theme = useContext(ThemeContext)
 
+  const handleAudioTimeChange = (amount: number) => {
+    audioRef.current.currentTime = amount
+    setProgress(amount)
+  }
+
   const episode = episodeList[currentEpisodeIndex]
 
   const audioRef = useRef<HTMLAudioElement>(null)
@@ -84,6 +89,7 @@ export const Player = () => {
               <Slider
                 max={episode.duration}
                 value={progress}
+                onChange={handleAudioTimeChange}
                 trackStyle={{ backgroundColor: theme.green500 }}
                 railStyle={{ backgroundClip: theme.purple300 }}
                 handleStyle={{ borderColor: theme.green500, borderWidth: 4 }}
