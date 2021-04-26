@@ -4,7 +4,7 @@ import Slider from "rc-slider"
 import "rc-slider/assets/index.css"
 import { useContext, useEffect, useRef } from "react"
 import styled, { css, ThemeContext } from "styled-components"
-import { PlayerContext } from "../contexts/PlayerContext"
+import { usePlayer } from "../contexts/PlayerContext"
 
 export const Player = () => {
   const {
@@ -17,7 +17,7 @@ export const Player = () => {
     playNext,
     playPrevious,
     setPlayingState,
-  } = useContext(PlayerContext)
+  } = usePlayer()
   const theme = useContext(ThemeContext)
 
   const episode = episodeList[currentEpisodeIndex]

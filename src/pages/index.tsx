@@ -3,9 +3,8 @@ import { ptBR } from "date-fns/locale"
 import { GetStaticProps } from "next"
 import Image from "next/image"
 import Link from "next/link"
-import { useContext } from "react"
 import styled, { css } from "styled-components"
-import { PlayerContext } from "../contexts/PlayerContext"
+import { usePlayer } from "../contexts/PlayerContext"
 import { api } from "../services/api"
 import { convertDurationToTimeString } from "../utils/convertDurationToTimeString"
 
@@ -64,7 +63,7 @@ export const getStaticProps: GetStaticProps = async () => {
 }
 
 export default function Home({ all_episodes, latest_episodes }: HomeProps) {
-  const { playList } = useContext(PlayerContext)
+  const { playList } = usePlayer()
 
   const episodeList = [...latest_episodes, ...all_episodes]
 

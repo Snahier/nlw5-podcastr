@@ -4,8 +4,8 @@ import { GetStaticPaths, GetStaticProps } from "next"
 import { Params } from "next/dist/next-server/server/router"
 import Image from "next/image"
 import Link from "next/link"
-import { useRouter } from "next/router"
 import styled, { css } from "styled-components"
+import { usePlayer } from "../../contexts/PlayerContext"
 import { api } from "../../services/api"
 import { convertDurationToTimeString } from "../../utils/convertDurationToTimeString"
 
@@ -60,7 +60,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export default function Episode({ episode }: EpisodeProps) {
-  const router = useRouter()
+  const {} = usePlayer()
 
   return (
     <EpisodeContainer>
